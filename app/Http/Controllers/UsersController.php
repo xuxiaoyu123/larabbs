@@ -25,7 +25,7 @@ class UsersController extends Controller
         return view('users.edit', compact('user'));
     }
 
-    //UserRequest 隐式声明，目前理解为引入文件，自动进行验证，user模型验证
+    //UserRequest 隐式声明，目前理解为引入文件，自动进行验证，user隐性路由模型绑定
     public function update(UserRequest $request, ImageUploadHandler $uploader, User $user)
     {
         $this->authorize('update', $user);
