@@ -4,7 +4,11 @@
       <li class="media">
         <div class="media-left">
           <a href="{{ route('users.show', [$topic->user_id]) }}">
-            <img class="media-object img-thumbnail mr-3" style="width: 52px; height: 52px;" src="{{ $topic->user->avatar }}" title="{{ $topic->user->name }}">
+            @if(!$topic->user->avatar)
+              <img class="media-object img-thumbnail mr-3" style="width: 52px; height: 52px;" src="https://cdn.learnku.com/uploads/images/201709/20/1/PtDKbASVcz.png?imageView2/1/w/60/h/60" >
+            @else
+              <img class="media-object img-thumbnail mr-3" style="width: 52px; height: 52px;" src="{{ $topic->user->avatar }}" title="{{ $topic->user->name }}">
+            @endif
           </a>
         </div>
 

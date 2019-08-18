@@ -17,7 +17,11 @@
           <div class="media">
             <div align="center">
               <a href="{{ route('users.show', $topic->user->id) }}">
-                <img class="thumbnail img-fluid" src="{{ $topic->user->avatar }}" width="300px" height="300px">
+                @if(!$topic->user->avatar)
+                  <img class="thumbnail img-fluid" src="https://cdn.learnku.com/uploads/images/201709/20/1/PtDKbASVcz.png?imageView2/1/w/60/h/60" width="300px" height="300px">
+                @else
+                  <img class="thumbnail img-fluid" src="{{ $topic->user->avatar }}" width="300px" height="300px">
+                @endif
               </a>
             </div>
           </div>
@@ -42,16 +46,23 @@
           <div class="topic-body mt-4 mb-4">
             {!! $topic->body !!}
           </div>
-
-          <div class="operate">
-            <hr>
-            <a href="{{ route('topics.edit', $topic->id) }}" class="btn btn-outline-secondary btn-sm" role="button">
-              <i class="far fa-edit"></i> 编辑
-            </a>
-            <a href="#" class="btn btn-outline-secondary btn-sm" role="button">
-              <i class="far fa-trash-alt"></i> 删除
-            </a>
-          </div>
+           @can('update', $topic)
+            <div class="operate">
+              <hr>
+              <a href="{{ route('topics.edit', $topic->id) }}" class="btn btn-outline-secondary btn-sm" role="button">
+                <i class="far fa-edit"></i> 编辑
+              </a>
+              <form action="{{ route('topics.destroy', $topic->id) }}" method="post"
+                    style="display: inline-block;"
+                    onsubmit="return confirm('您确定要删除吗？');">
+                {{ csrf_field() }}
+                {{ method_field('DELETE') }}
+                <button type="submit" class="btn btn-outline-secondary btn-sm">
+                  <i class="far fa-trash-alt"></i> 删除
+                </button>
+              </form>
+            </div>
+          @endcan
 
         </div>
       </div>
