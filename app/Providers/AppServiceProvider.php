@@ -4,7 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
-
+use App\Models\Topic;
+use App\Observers\TopicObserver;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -26,5 +27,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Schema::defaultStringLength(191);
+        Topic::Observe(TopicObserver::class);
     }
 }

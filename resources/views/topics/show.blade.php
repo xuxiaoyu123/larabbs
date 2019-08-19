@@ -17,11 +17,7 @@
           <div class="media">
             <div align="center">
               <a href="{{ route('users.show', $topic->user->id) }}">
-                @if(!$topic->user->avatar)
-                  <img class="thumbnail img-fluid" src="https://cdn.learnku.com/uploads/images/201709/20/1/PtDKbASVcz.png?imageView2/1/w/60/h/60" width="300px" height="300px">
-                @else
-                  <img class="thumbnail img-fluid" src="{{ $topic->user->avatar }}" width="300px" height="300px">
-                @endif
+                <img class="thumbnail img-fluid" src="{{ $topic->user->avatar }}" width="300px" height="300px">
               </a>
             </div>
           </div>
@@ -30,7 +26,7 @@
     </div>
 
     <div class="col-lg-9 col-md-9 col-sm-12 col-xs-12 topic-content">
-      <div class="card ">
+      <div class="card">
         <div class="card-body">
           <h1 class="text-center mt-3 mb-3">
             {{ $topic->title }}
@@ -46,7 +42,8 @@
           <div class="topic-body mt-4 mb-4">
             {!! $topic->body !!}
           </div>
-           @can('update', $topic)
+
+          @can('update', $topic)
             <div class="operate">
               <hr>
               <a href="{{ route('topics.edit', $topic->id) }}" class="btn btn-outline-secondary btn-sm" role="button">
@@ -66,6 +63,15 @@
 
         </div>
       </div>
+
+      {{-- 用户回复列表 --}}
+      <div class="card topic-reply mt-4">
+          <div class="card-body">
+              @include('topics._reply_box', ['topic' => $topic])
+              @include('topics._reply_list', ['replies' => $topic->replies()->with('user')->get()])
+          </div>
+      </div>
+
     </div>
   </div>
 @stop
