@@ -71,7 +71,6 @@
               @include('topics._reply_list', ['replies' => $topic->replies()->with('user')->get()])
           </div>
       </div>
-
     </div>
   </div>
 @stop
